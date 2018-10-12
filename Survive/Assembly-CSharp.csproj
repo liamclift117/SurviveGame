@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Objects\Player\Robot\LaserRifle\LaserRifleProjectile.cs" />
+    <Compile Include="Assets\Objects\Player\Robot\SawLauncher\SawLauncherProjectile.cs" />
     <Compile Include="Assets\Scripts\Ability.cs" />
     <Compile Include="Assets\Scripts\AI\Dumb.cs" />
     <Compile Include="Assets\Scripts\Aim.cs" />
