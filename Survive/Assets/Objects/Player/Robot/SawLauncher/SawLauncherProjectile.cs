@@ -38,8 +38,8 @@ public class SawLauncherProjectile : NetworkBehaviour {
         else
         {
             //Bounce off walls instead of terminating on them
-            Vector3 normal = collision.gameObject.GetComponent<Normal>().normal;
-            direction = -1 * (direction - 2 * Vector3.Dot(direction, normal) * normal);
+         //   Vector3 normal = collision.gameObject.GetComponent<Normal>().normal;
+         //   direction = -1 * (direction - 2 * Vector3.Dot(direction, normal) * normal);
         }
     }
 
