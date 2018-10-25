@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 95984919109356774}
   m_Layer: 8
   m_Name: Saw
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 95324257673453156}
   m_Layer: 8
   m_Name: Drill
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 50718296797751576}
   - component: {fileID: 114420936725462182}
   - component: {fileID: 114977707733211012}
-  - component: {fileID: 114568193414158156}
   - component: {fileID: 114116689078893148}
+  - component: {fileID: 114792483193251544}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 95465188531344074}
   m_Layer: 8
   m_Name: BinaryFrame
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 95332178241137556}
   m_Layer: 8
   m_Name: ArtilleryHead
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +176,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1032166643833822}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0.25, y: 0, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4459124827820488}
@@ -444,26 +444,6 @@ MonoBehaviour:
     i15: 140
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114568193414158156
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1480405311138120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b809eecef820fa3479319ce4ffa88967, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  armor: 5
-  resistane: 4
-  regen: 0.5
-  knockbackResist: 10
-  currentHealth: 100
-  healthBar: {fileID: 224904552208893830}
-  nextKnock: 0
-  aggro: 19
 --- !u!114 &114606237697929598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -507,6 +487,27 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114792483193251544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480405311138120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb0be83f43dfab46a8d2c2e4034f18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  armor: 5
+  resistane: 4
+  regen: 0.5
+  knockbackResist: 10
+  currentHealth: 100
+  healthBar: {fileID: 0}
+  nextKnock: 0
+  stopRegen: 0
+  aggro: 19
 --- !u!114 &114812809844857410
 MonoBehaviour:
   m_ObjectHideFlags: 1

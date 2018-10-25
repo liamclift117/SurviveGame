@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Objects\Enemy\HorrorHospital\Zombie\Zombie.cs" />
     <Compile Include="Assets\Objects\Player\Robot\LaserRifle\LaserRifleProjectile.cs" />
     <Compile Include="Assets\Objects\Player\Robot\SawLauncher\SawLauncherProjectile.cs" />
     <Compile Include="Assets\Scripts\Ability.cs" />
