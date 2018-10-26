@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 95294286415097112}
   m_Layer: 9
   m_Name: ZombieRightLeg1
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

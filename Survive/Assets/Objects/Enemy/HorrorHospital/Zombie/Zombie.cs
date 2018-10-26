@@ -49,21 +49,33 @@ public class Zombie : NetworkBehaviour
     public GameObject[] leftArms;
     public GameObject[] rightArms;
     public GameObject[] heads;
+    public GameObject leftLeg;
+    public GameObject rightLeg;
+    public GameObject body;
+    public GameObject leftArm;
+    public GameObject rightArm;
+    public GameObject head;
+
+    //Zombie specific
+    public int leg;
+    public bool attacking;
     // Use this for initialization
     void Start()
     {
         int randNum = Random.Range(0, leftLegs.Length);
-        Instantiate(leftLegs[randNum], gameObject.transform);
+        leftLeg = Instantiate(leftLegs[randNum], gameObject.transform);
         randNum = Random.Range(0, rightLegs.Length);
-        Instantiate(rightLegs[randNum], gameObject.transform);
+        rightLeg = Instantiate(rightLegs[randNum], gameObject.transform);
         randNum = Random.Range(0, bodies.Length);
-        Instantiate(bodies[randNum], gameObject.transform);
+        body = Instantiate(bodies[randNum], gameObject.transform);
         randNum = Random.Range(0, leftArms.Length);
-        Instantiate(leftArms[randNum], gameObject.transform);
+        leftArm = Instantiate(leftArms[randNum], gameObject.transform);
         randNum = Random.Range(0, rightArms.Length);
-        Instantiate(rightArms[randNum], gameObject.transform);
+        rightArm = Instantiate(rightArms[randNum], gameObject.transform);
         randNum = Random.Range(0, heads.Length);
-        Instantiate(heads[randNum], gameObject.transform);
+        head = Instantiate(heads[randNum], gameObject.transform);
+        leg = Random.Range(0, 2);
+        attacking = false;
 
         attention = attentionSpan;
         target = FindTarget();
@@ -102,7 +114,7 @@ public class Zombie : NetworkBehaviour
                 dir = target.transform.position - gameObject.transform.position;
                 dir.Normalize();
                 attackedAt = Time.time;
-                AttackTarget(dir, attackVariables, moveVariables);
+                StartCoroutine(AttackTarget(dir, attackVariables, moveVariables));
             }
         }
     }
@@ -148,8 +160,44 @@ public class Zombie : NetworkBehaviour
         Debug.Log("Moving towards target");
         Vector3 direction = target.transform.position - gameObject.transform.position;
         direction.Normalize();
-        var x = direction.x * Time.deltaTime * moveSpeed;
-        var y = direction.y * Time.deltaTime * moveSpeed;
+        if(direction.x > 0.0)
+        {
+            leftLeg.GetComponent<SpriteRenderer>().flipX = false;
+            rightLeg.GetComponent<SpriteRenderer>().flipX = false;
+            body.GetComponent<SpriteRenderer>().flipX = false;
+            leftArm.GetComponent<SpriteRenderer>().flipX = false;
+            rightArm.GetComponent<SpriteRenderer>().flipX = false;
+            head.GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else
+        {
+            leftLeg.GetComponent<SpriteRenderer>().flipX = true;
+            rightLeg.GetComponent<SpriteRenderer>().flipX = true;
+            body.GetComponent<SpriteRenderer>().flipX = true;
+            leftArm.GetComponent<SpriteRenderer>().flipX = true;
+            rightArm.GetComponent<SpriteRenderer>().flipX = true;
+            head.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        if (leg == 0)
+        {
+            leftLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed);
+        }
+        else
+        {
+            rightLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed);
+        }
+        var x = 0.0f;
+        var y = 0.0f;
+        if (attacking)
+        {
+            x = direction.x * Time.deltaTime * moveSpeed/2.0f;
+            y = direction.y * Time.deltaTime * moveSpeed/2.0f;
+        }
+        else
+        {
+            x = direction.x * Time.deltaTime * moveSpeed;
+            y = direction.y * Time.deltaTime * moveSpeed;
+        }
         //if (lastDirection.x == 0.0f && lastDirection.y == 0.0f)
         //{
         //lastDirection = direction;
@@ -177,8 +225,16 @@ public class Zombie : NetworkBehaviour
         Debug.Log("Done Moving");
     }
 
-    public void AttackTarget(Vector3 dir, string[] aVar, string[] mVar)
+    public IEnumerator AttackTarget(Vector3 dir, string[] aVar, string[] mVar)
     {
+        //Start playing animation
+        attacking = true;
+        rightArm.GetComponent<Animator>().SetTrigger("Attack");
+        leftArm.GetComponent<Animator>().SetTrigger("Attack");
+
+        //Delay the attack to allow for dodging
+        yield return new WaitForSeconds(2);
+
         var attack = (GameObject)Instantiate(
             attackPrefab,
             attackSpawn.position,
@@ -322,5 +378,6 @@ public class Zombie : NetworkBehaviour
 
         Debug.Log("Setting Object life");
         Destroy(attack, attackLife);
+        attacking = false;
     }
 }

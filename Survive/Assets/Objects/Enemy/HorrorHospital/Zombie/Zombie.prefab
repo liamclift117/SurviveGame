@@ -173,12 +173,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b809eecef820fa3479319ce4ffa88967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 10
   armor: 5
   resistane: 4
-  regen: 0.5
+  regen: 0.1
   knockbackResist: 10
-  currentHealth: 100
+  currentHealth: 10
   healthBar: {fileID: 224998872437941700}
   nextKnock: 0
   aggro: 19
@@ -279,14 +279,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 1
-  moveSpeed: 0.91
-  bloodlust: 1
+  moveSpeed: 0.5
+  bloodlust: 6
   priority: 1
   attentionSpan: 5
   attention: 0
   target: {fileID: 0}
   lastDirection: {x: 0, y: 0, z: 0}
-  range: 15
+  range: 2
   attackDelay: 1
   attackedAt: 0
   attackPrefab: {fileID: 1261274604627260, guid: 59a623ecee63f4147afd92d6c5d8e8d3,
@@ -339,6 +339,14 @@ MonoBehaviour:
   - {fileID: 1138635597247410, guid: 5cce4b32af12c6844950d53e643fee70, type: 2}
   - {fileID: 1846909227422494, guid: f719f7abfdddda34aa732a8468a86d73, type: 2}
   - {fileID: 1223070044869002, guid: 093479561e3c1d5478084bce5103984a, type: 2}
+  leftLeg: {fileID: 0}
+  rightLeg: {fileID: 0}
+  body: {fileID: 0}
+  leftArm: {fileID: 0}
+  rightArm: {fileID: 0}
+  head: {fileID: 0}
+  leg: 0
+  attacking: 0
 --- !u!114 &114846352173950342
 MonoBehaviour:
   m_ObjectHideFlags: 1
