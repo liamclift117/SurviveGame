@@ -114,8 +114,8 @@ public class PlayerHealth : NetworkBehaviour
     //When the health variable changes move the health bar
     void OnChangeHealth(float currentHealth)
     {
-        healthBar.sizeDelta = new Vector2(
-            currentHealth,
-            healthBar.sizeDelta.y);
+        //healthBar.sizeDelta = new Vector2(
+        //    currentHealth,
+        //    healthBar.sizeDelta.y);
     }
 }

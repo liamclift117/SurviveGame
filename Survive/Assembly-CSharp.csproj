@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\Movement\ArcMove.cs" />
     <Compile Include="Assets\Scripts\Movement\BounceMove.cs" />
+    <Compile Include="Assets\Scripts\Movement\MeleeMove.cs" />
     <Compile Include="Assets\Scripts\Movement\StraightMove.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Reference Include="UnityEditor.StandardEvents">

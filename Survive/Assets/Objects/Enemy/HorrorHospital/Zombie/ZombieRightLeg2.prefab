@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4438523251040772}
   - component: {fileID: 212732220514657238}
   - component: {fileID: 95869391806862928}
+  - component: {fileID: 114794466491641682}
+  - component: {fileID: 114363536159357936}
   m_Layer: 9
   m_Name: ZombieRightLeg2
   m_TagString: Untagged
@@ -59,6 +61,57 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114363536159357936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098039826392674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 95869391806862928}
+  m_ParameterSendBits: 1
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
+--- !u!114 &114794466491641682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098039826392674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 75
+    i1: 14
+    i2: 77
+    i3: 90
+    i4: 230
+    i5: 200
+    i6: 20
+    i7: 228
+    i8: 184
+    i9: 168
+    i10: 214
+    i11: 197
+    i12: 115
+    i13: 32
+    i14: 66
+    i15: 69
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212732220514657238
 SpriteRenderer:
   m_ObjectHideFlags: 1

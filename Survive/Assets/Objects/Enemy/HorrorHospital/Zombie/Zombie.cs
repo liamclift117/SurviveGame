@@ -34,7 +34,7 @@ public class Zombie : NetworkBehaviour
     public string[] attackVariables = { "", "", "", "", "", "", "", "" };
 
     public Transform attackSpawn;
-    public float attackLife = 2.0f;
+    public float attackLife = 0.3f;
     public Vector3 dir;
 
     //Movement variables
@@ -59,6 +59,7 @@ public class Zombie : NetworkBehaviour
     //Zombie specific
     public int leg;
     public bool attacking;
+    public int walkTime;
     // Use this for initialization
     void Start()
     {
@@ -76,6 +77,7 @@ public class Zombie : NetworkBehaviour
         head = Instantiate(heads[randNum], gameObject.transform);
         leg = Random.Range(0, 2);
         attacking = false;
+        walkTime = 20;
 
         attention = attentionSpan;
         target = FindTarget();
@@ -94,10 +96,32 @@ public class Zombie : NetworkBehaviour
             attention = attentionSpan;
             target = FindTarget();
         }
-        MoveTowardsTarget();
+
+        //Zombie stuttery walk
+        if (walkTime < 12)
+        {
+            MoveTowardsTarget();
+        }
+        else
+        {
+            if (leg == 0)
+            {
+                leftLeg.GetComponent<Animator>().SetFloat("Speed", 0.0f);
+            }
+            else
+            {
+                rightLeg.GetComponent<Animator>().SetFloat("Speed", 0.0f);
+            }
+        }
+        if (walkTime < 1)
+        {
+            walkTime = 30;
+        }
+        walkTime--;
+
         if (Vector3.Distance(target.transform.position, gameObject.transform.position) <= range)
         {
-            Debug.Log(attackedAt + "    " + attackDelay + "    " + Time.time);
+            //Debug.Log(attackedAt + "    " + attackDelay + "    " + Time.time);
             if (attackedAt + attackDelay < Time.time)
             {
                 attackVariables[0] = "" + pierce;
@@ -122,7 +146,7 @@ public class Zombie : NetworkBehaviour
     GameObject FindTarget()
     {
         GameObject[] potentialTargets = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log(potentialTargets.Length);
+        //Debug.Log(potentialTargets.Length);
         GameObject bestTarget = potentialTargets[0];
         for (int i = 0; i < potentialTargets.Length; i++)
         {
@@ -151,13 +175,13 @@ public class Zombie : NetworkBehaviour
                 bestTarget = potentialTargets[i];
             }
         }
-        Debug.Log(bestTarget.transform);
+        //Debug.Log(bestTarget.transform);
         return bestTarget;
     }
 
     public void MoveTowardsTarget()
     {
-        Debug.Log("Moving towards target");
+        //Debug.Log("Moving towards target");
         Vector3 direction = target.transform.position - gameObject.transform.position;
         direction.Normalize();
         if(direction.x > 0.0)
@@ -178,25 +202,33 @@ public class Zombie : NetworkBehaviour
             rightArm.GetComponent<SpriteRenderer>().flipX = true;
             head.GetComponent<SpriteRenderer>().flipX = true;
         }
-        if (leg == 0)
-        {
-            leftLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed);
-        }
-        else
-        {
-            rightLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed);
-        }
         var x = 0.0f;
         var y = 0.0f;
         if (attacking)
         {
             x = direction.x * Time.deltaTime * moveSpeed/2.0f;
             y = direction.y * Time.deltaTime * moveSpeed/2.0f;
+            if (leg == 0)
+            {
+                leftLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed * 0.6f);
+            }
+            else
+            {
+                rightLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed * 0.6f);
+            }
         }
         else
         {
             x = direction.x * Time.deltaTime * moveSpeed;
             y = direction.y * Time.deltaTime * moveSpeed;
+            if (leg == 0)
+            {
+                leftLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed * 1.2f);
+            }
+            else
+            {
+                rightLeg.GetComponent<Animator>().SetFloat("Speed", moveSpeed * 1.2f);
+            }
         }
         //if (lastDirection.x == 0.0f && lastDirection.y == 0.0f)
         //{
@@ -222,7 +254,7 @@ public class Zombie : NetworkBehaviour
         //y = direction.y * Time.deltaTime * speed;
         //Debug.Log("Actually Move");
         transform.Translate(x, y, y);
-        Debug.Log("Done Moving");
+        //Debug.Log("Done Moving");
     }
 
     public IEnumerator AttackTarget(Vector3 dir, string[] aVar, string[] mVar)
@@ -233,145 +265,33 @@ public class Zombie : NetworkBehaviour
         leftArm.GetComponent<Animator>().SetTrigger("Attack");
 
         //Delay the attack to allow for dodging
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
 
         var attack = (GameObject)Instantiate(
             attackPrefab,
             attackSpawn.position,
             attackSpawn.rotation);
-        Debug.Log(attack.ToString());
+
+        attack.transform.parent = gameObject.transform;
+        //Debug.Log(attack.ToString());
 
         //Attack script adding
-        if (type.Equals("physical"))
-        {
-            Debug.Log(attack.GetComponent<PhysicalDamage>().type);
-            Debug.Log(attack.GetComponent<PhysicalDamage>().variables.ToString());
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<PhysicalDamage>().variables.Add(aVar[7]);
-        }
-        else if (type.Equals("fire"))
-        {
-            Debug.Log(attack.GetComponent<FireDamage>().type);
-            Debug.Log(attack.GetComponent<FireDamage>().variables.ToString());
-            attack.GetComponent<FireDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<FireDamage>().variables.Add(aVar[7]);
-        }
-        else if (type.Equals("electric"))
-        {
-            Debug.Log(attack.GetComponent<ElectricDamage>().type);
-            Debug.Log(attack.GetComponent<ElectricDamage>().variables.ToString());
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<ElectricDamage>().variables.Add(aVar[7]);
-        }
-        else if (type.Equals("poison"))
-        {
-            Debug.Log(attack.GetComponent<PoisonDamage>().type);
-            Debug.Log(attack.GetComponent<PoisonDamage>().variables.ToString());
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<PoisonDamage>().variables.Add(aVar[7]);
-        }
-        else if (type.Equals("sound"))
-        {
-            Debug.Log(attack.GetComponent<SoundDamage>().type);
-            Debug.Log(attack.GetComponent<SoundDamage>().variables.ToString());
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<SoundDamage>().variables.Add(aVar[7]);
-        }
-        else if (type.Equals("cold"))
-        {
-            Debug.Log(attack.GetComponent<ColdDamage>().type);
-            Debug.Log(attack.GetComponent<ColdDamage>().variables.ToString());
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<ColdDamage>().variables.Add(aVar[7]);
-        }
-        else if (type.Equals("bleed"))
-        {
-            Debug.Log(attack.GetComponent<BleedDamage>().type);
-            Debug.Log(attack.GetComponent<BleedDamage>().variables.ToString());
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<BleedDamage>().variables.Add(aVar[7]);
-        }
-        else //if (type.Equals("magic"))
-        {
-            Debug.Log(attack.GetComponent<MagicDamage>().type);
-            Debug.Log(attack.GetComponent<MagicDamage>().variables.ToString());
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[0]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[1]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[2]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[3]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[4]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[5]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[6]);
-            attack.GetComponent<MagicDamage>().variables.Add(aVar[7]);
-        }
-
-        //Movement script adding
-        if (moveType.Equals("straight"))
-        {
-            Debug.Log(attack.GetComponent<StraightMove>().variables.ToString());
-            attack.GetComponent<StraightMove>().variables.Add(mVar[0]);
-            attack.GetComponent<StraightMove>().variables.Add(mVar[1]);
-            attack.GetComponent<StraightMove>().variables.Add(mVar[2]);
-            attack.GetComponent<StraightMove>().direction = dir;
-        }
-        else if (moveType.Equals("bounce"))
-        {
-            Debug.Log(attack.GetComponent<BounceMove>().variables.ToString());
-            attack.GetComponent<BounceMove>().variables.Add(mVar[0]);
-            attack.GetComponent<BounceMove>().variables.Add(mVar[1]);
-            attack.GetComponent<BounceMove>().variables.Add(mVar[2]);
-            attack.GetComponent<BounceMove>().direction = dir;
-        }
-        else //if (moveType.Equals("arc"))
-        {
-            Debug.Log(attack.GetComponent<ArcMove>().variables.ToString());
-            attack.GetComponent<ArcMove>().variables.Add(mVar[0]);
-            attack.GetComponent<ArcMove>().variables.Add(mVar[1]);
-            attack.GetComponent<ArcMove>().variables.Add(mVar[2]);
-            attack.GetComponent<ArcMove>().direction = dir;
-        }
+        //Debug.Log(attack.GetComponent<PhysicalDamage>().type);
+        //Debug.Log(attack.GetComponent<PhysicalDamage>().variables.ToString());
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[0]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[1]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[2]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[3]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[4]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[5]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[6]);
+        attack.GetComponent<PhysicalDamage>().variables.Add(aVar[7]);
+        
+        //Debug.Log(attack.GetComponent<MeleeMove>().variables.ToString());
+        attack.GetComponent<MeleeMove>().variables.Add(mVar[0]);
+        attack.GetComponent<MeleeMove>().variables.Add(mVar[1]);
+        attack.GetComponent<MeleeMove>().variables.Add(mVar[2]);
+        attack.GetComponent<MeleeMove>().direction = dir;
 
         Debug.Log("Attempting to spawn on server");
         NetworkServer.Spawn(attack);

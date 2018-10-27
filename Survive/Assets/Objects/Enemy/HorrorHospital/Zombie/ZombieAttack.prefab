@@ -21,13 +21,13 @@ GameObject:
   - component: {fileID: 4144672838595100}
   - component: {fileID: 114869548479595734}
   - component: {fileID: 114923950730070984}
-  - component: {fileID: 114340290873283202}
   - component: {fileID: 114095160085226454}
-  - component: {fileID: 58312596973964762}
   - component: {fileID: 212625981128012280}
+  - component: {fileID: 70277534201605374}
+  - component: {fileID: 114181027411554586}
   m_Layer: 14
   m_Name: ZombieAttack
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,14 +39,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1261274604627260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.175, y: -0.205, z: 0}
+  m_LocalScale: {x: 2.56, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58312596973964762
-CircleCollider2D:
+--- !u!70 &70277534201605374
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -57,9 +57,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.41126302}
-  serializedVersion: 2
-  m_Radius: 0.08873698
+  m_Offset: {x: 0.0029441868, y: -5.4839744e-10}
+  m_Size: {x: 0.19411176, y: 0.2000001}
+  m_Direction: 1
 --- !u!114 &114095160085226454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,7 +77,7 @@ MonoBehaviour:
   armorPierce: 5
   type: phyiscal
   knockback: 1
---- !u!114 &114340290873283202
+--- !u!114 &114181027411554586
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,11 +85,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261274604627260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01fed340f7149ed44b2caeb8ebb697a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 1996223f84a0cfd4fa7c7261e596e24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0, z: 0}
-  speed: 1
+  edgeDistance: 0.15
+  yToOrigin: 0
+  xToOrign: 0
 --- !u!114 &114869548479595734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,7 +181,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 4
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8207547, g: 0.4219918, b: 0.4219918, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

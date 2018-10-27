@@ -23,6 +23,7 @@ public class PhysicalDamage : Damage
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(gameObject + " Hit " + collision.gameObject);
         if (pierce < 0)
         {
             Destroy(gameObject);
@@ -34,6 +35,11 @@ public class PhysicalDamage : Damage
             if (health != null)
             {
                 health.TakeDamage(damage, armorPierce, knockback, gameObject.transform.position, type);
+            }
+            var phealth = hit.GetComponent<PlayerHealth>();
+            if (phealth != null)
+            {
+                phealth.TakeDamage(damage, armorPierce, knockback, gameObject.transform.position, type);
             }
         }
     }

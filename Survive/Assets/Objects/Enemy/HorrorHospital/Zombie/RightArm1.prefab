@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4937184626255992}
   - component: {fileID: 212582616362597194}
   - component: {fileID: 95460834502330280}
+  - component: {fileID: 114940231061497970}
+  - component: {fileID: 114165214266303710}
   m_Layer: 9
   m_Name: RightArm1
   m_TagString: Untagged
@@ -59,6 +61,57 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114165214266303710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1129159166505448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 95460834502330280}
+  m_ParameterSendBits: 1
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
+--- !u!114 &114940231061497970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1129159166505448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 137
+    i1: 236
+    i2: 41
+    i3: 165
+    i4: 250
+    i5: 117
+    i6: 6
+    i7: 20
+    i8: 59
+    i9: 182
+    i10: 157
+    i11: 188
+    i12: 148
+    i13: 91
+    i14: 215
+    i15: 114
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212582616362597194
 SpriteRenderer:
   m_ObjectHideFlags: 1
